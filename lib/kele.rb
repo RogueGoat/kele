@@ -7,7 +7,7 @@ attr_reader :email, :password
   include HTTParty
   include Roadmap
   
-  base_url = "https://www.bloc.io/api/v1/"
+  # base_url = "https://www.bloc.io/api/v1/"
 
   def initialize(email, password)
     response = self.class.post(api_url("sessions"), body: { email: email, password: password })

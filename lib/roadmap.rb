@@ -3,7 +3,7 @@ require 'json'
 
 module Roadmap
   include HTTParty
-  base_url = "https://www.bloc.io/api/v1/"
+  # base_url = "https://www.bloc.io/api/v1/"
      
   def get_roadmap(roadmap_id)
     response = self.class.get(api_url("roadmaps/#{roadmap_id}"), headers: { 'authorization' => @auth_token })
