@@ -35,15 +35,20 @@ attr_reader :email, :password
     puts mentor_availability
   end
   
-  # def get_roadmap(roadmap_id)
-  #   response = self.class.get(api_url("roadmaps/#{roadmap_id}"), headers: { 'authorization' => @auth_token })
-  #   @roadmap = JSON.parse(response.body)
-  # end
+  def get_messages(message = "all")
+    if message == "all"
+    response = self.class.get(api_url("message_threads"), headers: { 'authorization' => @auth_token })
+    else
+    response = self.class.get(api_url("message_threads?page=#{message}"), headers: { 'authorization' => @auth_token })
+    end
+    @message = JSON.parse(response.body)
+  end
   
-  # def get_checkpoint(checkpoint_id)
-  #   response = self.class.get(api_url("checkpoints/#{checkpoint_id}"), headers: { 'authorization' => @auth_token })
-  #   @checkpoints = JSON.parse(response.body)
-  # end
+  def create_message
+    response = self.class.get(api_url("messages"), headers: { 'authorization' => @auth_token })
+    @message = JSON.parse(response.body)
+  end
+  
 
 private
 
