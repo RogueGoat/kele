@@ -39,16 +39,27 @@ attr_reader :email, :password
     if message == "all"
     response = self.class.get(api_url("message_threads"), headers: { 'authorization' => @auth_token })
     else
+      # need to make sure this works
     response = self.class.get(api_url("message_threads?page=#{message}"), headers: { 'authorization' => @auth_token })
     end
     @message = JSON.parse(response.body)
   end
   
-  def create_message
-    response = self.class.get(api_url("messages"), headers: { 'authorization' => @auth_token })
+  def create_message(sender, recipient_id, subject, stripped_text)
+    # need to make body not header
+    response = self.class.get(api_url("messages"), 
+    body: {sender: sender, recipient_id: recipient_id, subject: subject, stripped_text: stripped_text},
+    headers: { 'authorization' => @auth_token })
     @message = JSON.parse(response.body)
+    response.success? puts "Message sent successfully!"
   end
   
+  def create_submission(checkpoint_id, assignment_branch, assignment_commit_link, comment)
+    response = self.class.get(api_url("checkpoint_submissions"), 
+      body: { checkpoint_id: checkpoint_id, assignment_branch: assignment_branch, assignment_commit_link: assignment_commit_link, comment: comment },
+      headers: { 'authorization' => @auth_token })
+    @checkpoint = JSON.parse(response.body)
+  end
 
 private
 
